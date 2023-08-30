@@ -1,6 +1,5 @@
-// Server
-// Dependencies-----------------------------------------------------
-
+// File name: server.js
+// Dependencies ----------------------------------------------------
 require("dotenv").config();
 const bodyParser = require("body-parser");
 const express = require("express");
@@ -8,30 +7,30 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const port = process.env.PORT || 3000;
 
-// Database connection------------------------------------------------
+// Database connection ---------------------------------------------
 
-// Express app setup
+// Express app setup -----------------------------------------------
 const app =  express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use("*", cors());
 
-// Setup routes--------------------------------------------------------
+// Setup routes ----------------------------------------------------
 
-// Homepage
+// Homepage route
 app.get('/', (req, res) => {
     res.send("Hello.");
 });
 
-// User
+// User route
 const userRouter = require("./routes/user");
 app.use('/user', userRouter);
 
-// Auth
+// Auth route
 const authRouter = require("./routes/auth");
 app.use('/auth', authRouter);
 
-// Run app (Listen on port)-------------------------------------------
+// Run app (Listen on port) ----------------------------------------
 app.listen(port, () => {
     console.log(`The app is running on port ${port}.`);
 });

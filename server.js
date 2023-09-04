@@ -1,4 +1,5 @@
 // File name: server.js
+
 // Dependencies ----------------------------------------------------
 require("dotenv").config();
 const bodyParser = require("body-parser");
@@ -22,16 +23,17 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use("*", cors());
 
 // Setup routes ----------------------------------------------------
-// Homepage route
+
+// - Homepage route
 app.get('/', (req, res) => {
     res.send("Hello.");
 });
 
-// User route
+// - User route
 const userRouter = require("./routes/api/user");
 app.use('/user', userRouter);
 
-// Auth route
+// - Auth route
 const authRouter = require("./routes/api/auth");
 app.use('/auth', authRouter);
 

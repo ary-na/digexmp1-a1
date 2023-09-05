@@ -38,7 +38,7 @@ router.get('/:id', (req, res) => {
 router.post('/', (req, res) => {
     // check if body is empty
     if (!req.body) {
-        return res.status(404).json({
+        return res.status(400).json({
             "message": "Body is empty!"
         })
     }
@@ -61,16 +61,60 @@ router.post('/', (req, res) => {
         })
         .catch(err => {
             res.json(500).json({
-                "message": "Failed creating a user!"
+                "message": "failed creating a user!"
             })
-            console.log("Failed creating a user!", err)
+            console.log("failed creating a user!", err)
         })
 })
 
 // PUT - update user by id -----------------------------------------
 // end point = /user/:id
+router.put("/:id", (req, res) => {
+    // check if body is empty
+    if (!req.body) {
+        return res.status(400).json({
+            "message": "body is empty!"
+        })
+    }
+
+    // Update the user using the user model
+    User.findByIdAndUpdate(req.params.id, req.body, {new: true})
+        .then(user => {
+            res.json(user)
+        })
+        .catch(err => {
+            res.status(500).json({
+                message: "failed updating user",
+                error: err
+            })
+            console.log("Failed updating a user", err)
+        })
+})
 
 // DELETE - delete a user by id ------------------------------------
 // endpoint = /user/:id
+router.delete("/:id", (req, res) => {
+    if(!req.params.id) {
+        return res.status(400).json({
+            message: "missing user id!"
+        })
+    }
+
+    // Delete the user using User model
+    User.findByIdAndDelete(req.params.id)
+        .then(() => {
+            res.json({
+                message: "user deleted"
+            })
+        })
+        .catch(err => {
+            res.status(500).json({
+                message: "failed deleting user",
+                error: err
+            })
+            console.log("Failed deleting user", err)
+        })
+
+})
 
 module.exports = router

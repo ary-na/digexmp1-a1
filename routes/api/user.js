@@ -1,22 +1,27 @@
 // @file    ./routes/api/user.js
 
-// Setup user routes dependencies
+// Setup dependencies for user routes.
 const express = require("express")
 const router = express.Router()
 const User = require("./../../models/User")
+const e = require("express");
 
 // GET -------------------------------------------------------------------------
 // @route   GET /user
 // @desc    Get all users
 // @access  Public
 router.get('/', (req, res) => {
-    // Get all users from the User model, using the find() method.
-    User.find({firstName: "A"})
+    // Get all users from the User model.
+    User.find()
         .then(users => {
             res.json(users)
         })
         .catch(err => {
-            console.log("No users found!", err)
+            res.status(500).json({
+                message: "error finding user!",
+                error: err
+            })
+            console.log("error finding user!", err)
         })
 });
 
@@ -27,13 +32,21 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {
     User.findById(req.params.id)
         .then(user => {
-            res.json(user)
+            // Check if user exist in the db
+            if (!user) {
+                res.status(404).json({
+                    message: "user not found!"
+                })
+            } else {
+                res.json(user)
+            }
         })
         .catch(err => {
-            res.status(404).json({
-                "message": "User not found!"
+            res.status(500).json({
+                message: "error finding user!",
+                error: err
             })
-            console.log("User not found!", err)
+            console.log("error finding user!", err)
         })
 })
 
@@ -42,14 +55,14 @@ router.get('/:id', (req, res) => {
 // @desc    Create a new user
 // @access  Public
 router.post('/', (req, res) => {
-    // check if body is empty
+    // Check if body is missing
     if (!req.body) {
         return res.status(400).json({
-            "message": "Body is empty!"
+            message: "body is missing!"
         })
     }
 
-    // Create a new user document
+    // Create a new user document using the User model.
     const newUser = new User({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
@@ -62,14 +75,14 @@ router.post('/', (req, res) => {
     // Save new user document
     newUser.save()
         .then(user => {
-            // Send back 201 status, and user object
-            res.status(201).json(user)
+            res.json(user)
         })
         .catch(err => {
             res.json(500).json({
-                "message": "failed creating a user!"
+                message: "error creating user!",
+                error: err
             })
-            console.log("failed creating a user!", err)
+            console.log("error creating user!", err)
         })
 })
 
@@ -78,24 +91,31 @@ router.post('/', (req, res) => {
 // @desc    Update a user by id
 // @access  Public
 router.put("/:id", (req, res) => {
-    // check if body is empty
-    if (!req.body) {
+    // Check if header/body is missing
+    if (!req.body || !req.params.id) {
         return res.status(400).json({
-            "message": "body is empty!"
+            message: "header/body is missing!"
         })
     }
 
-    // Update the user using the user model
+    // Find and update the user using the User model and return the updated user.
     User.findByIdAndUpdate(req.params.id, req.body, {new: true})
         .then(user => {
-            res.json(user)
+            // Check if user exist in the db
+            if (!user) {
+                res.status(404).json({
+                    message: "user not found!"
+                })
+            } else {
+                res.json(user)
+            }
         })
         .catch(err => {
             res.status(500).json({
-                message: "failed updating user",
+                message: "error updating user!",
                 error: err
             })
-            console.log("Failed updating a user", err)
+            console.log("error updating user!", err)
         })
 })
 
@@ -104,27 +124,27 @@ router.put("/:id", (req, res) => {
 // @desc    Delete a user by id
 // @access  Public
 router.delete("/:id", (req, res) => {
-    if(!req.params.id) {
+    // Check if header is missing
+    if (!req.params.id) {
         return res.status(400).json({
-            message: "missing user id!"
+            message: "user id is missing!"
         })
     }
 
-    // Delete the user using User model
+    // Delete the user using the User model.
     User.findByIdAndDelete(req.params.id)
         .then(() => {
             res.json({
-                message: "user deleted"
+                message: "user deleted!"
             })
         })
         .catch(err => {
             res.status(500).json({
-                message: "failed deleting user",
+                message: "error deleting user!",
                 error: err
             })
-            console.log("Failed deleting user", err)
+            console.log("error deleting user!", err)
         })
-
 })
 
 module.exports = router

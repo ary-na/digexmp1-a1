@@ -1,6 +1,6 @@
 // File name: server.js
 
-// Dependencies ----------------------------------------------------
+// Dependencies ----------------------------------------------------------------
 require("dotenv").config();
 const bodyParser = require("body-parser");
 const express = require("express");
@@ -8,7 +8,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const port = process.env.PORT || 3000;
 
-// Database connection ---------------------------------------------
+// Database connection ---------------------------------------------------------
 mongoose.connect(process.env.MONGO_URI)
     .then(() => {
         console.log("db connected!");
@@ -16,13 +16,13 @@ mongoose.connect(process.env.MONGO_URI)
         console.log("db connection failed!", err);
     });
 
-// Express app setup -----------------------------------------------
+// Express app setup -----------------------------------------------------------
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use("*", cors());
 
-// Setup routes ----------------------------------------------------
+// Setup routes ----------------------------------------------------------------
 
 // - Homepage route
 app.get('/', (req, res) => {
@@ -37,7 +37,7 @@ app.use('/user', userRouter);
 const authRouter = require("./routes/api/auth");
 app.use('/auth', authRouter);
 
-// Run app (Listen on port) ----------------------------------------
+// Run app (Listen on port) ----------------------------------------------------
 app.listen(port, () => {
     console.log(`The app is running on port ${port}.`);
 });

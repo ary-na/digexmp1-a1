@@ -1,12 +1,14 @@
-// File name: user.js
+// @file    ./routes/api/user.js
 
-// User routes
+// Setup user routes dependencies
 const express = require("express")
 const router = express.Router()
 const User = require("./../../models/User")
 
-// GET - get all users ---------------------------------------------
-// endpoint = /user
+// GET -------------------------------------------------------------------------
+// @route   GET /user
+// @desc    Get all users
+// @access  Public
 router.get('/', (req, res) => {
     // Get all users from the User model, using the find() method.
     User.find({firstName: "A"})
@@ -18,8 +20,10 @@ router.get('/', (req, res) => {
         })
 });
 
-// GET - get a single user by id -----------------------------------
-// endpoint = /user/:id
+// GET -------------------------------------------------------------------------
+// @route   GET /user/:id
+// @desc    Get a user by id
+// @access  Public
 router.get('/:id', (req, res) => {
     User.findById(req.params.id)
         .then(user => {
@@ -33,8 +37,10 @@ router.get('/:id', (req, res) => {
         })
 })
 
-// POST - create new user ------------------------------------------
-// endpoint = /user
+// POST ------------------------------------------------------------------------
+// @route   POST /user
+// @desc    Create a new user
+// @access  Public
 router.post('/', (req, res) => {
     // check if body is empty
     if (!req.body) {
@@ -67,8 +73,10 @@ router.post('/', (req, res) => {
         })
 })
 
-// PUT - update user by id -----------------------------------------
-// end point = /user/:id
+// PUT -------------------------------------------------------------------------
+// @route   PUT /user/:id
+// @desc    Update a user by id
+// @access  Public
 router.put("/:id", (req, res) => {
     // check if body is empty
     if (!req.body) {
@@ -91,8 +99,10 @@ router.put("/:id", (req, res) => {
         })
 })
 
-// DELETE - delete a user by id ------------------------------------
-// endpoint = /user/:id
+// DELETE ----------------------------------------------------------------------
+// @route   DELETE /user/:id
+// @desc    Delete a user by id
+// @access  Public
 router.delete("/:id", (req, res) => {
     if(!req.params.id) {
         return res.status(400).json({

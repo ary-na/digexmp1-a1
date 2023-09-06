@@ -10,7 +10,7 @@ const e = require("express");
 // @route   GET /user
 // @desc    Get all users
 // @access  Public
-router.get('/', (req, res) =>
+router.get('/', (req, res) => {
     // Get all users from the User model.
     User.find()
         .then(users => {

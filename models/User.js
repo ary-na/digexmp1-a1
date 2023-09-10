@@ -1,10 +1,12 @@
-// Dependencies
+// @file    ./models/User.js
+
+// Setup dependencies to create the user model.
 const mongoose = require("mongoose");
 const schema = mongoose.Schema;
 require("mongoose-type-email");
 const stream = require("stream");
 
-// Create schema
+// Create schema ---------------------------------------------------------------
 const userSchema = new mongoose.Schema({
     firstName: {
         type: String,
@@ -32,8 +34,8 @@ const userSchema = new mongoose.Schema({
     }
 }, {timestamps: true});
 
-// Create mongoose model
+// Create mongoose model -------------------------------------------------------
 const userModel = mongoose.model("User", userSchema, "users");
 
-// Export as a module
+// Export the User model as a module.
 module.exports = userModel;

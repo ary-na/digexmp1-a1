@@ -1,4 +1,4 @@
-// File name: server.js
+// @file    ./server.js
 
 // Dependencies ----------------------------------------------------------------
 require("dotenv").config();
@@ -26,7 +26,7 @@ app.use("*", cors());
 
 // - Homepage route
 app.get('/', (req, res) => {
-    res.send("Hello.");
+    res.send("Homepage");
 });
 
 // - User route

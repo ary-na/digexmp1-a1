@@ -147,4 +147,5 @@ router.delete("/:id", (req, res) => {
         })
 })
 
+// Export the router object as a module.
 module.exports = router

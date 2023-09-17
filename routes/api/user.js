@@ -4,7 +4,6 @@
 const express = require("express")
 const router = express.Router()
 const User = require("./../../models/User")
-const e = require("express");
 
 // GET -------------------------------------------------------------------------
 // @route   GET /user
@@ -23,7 +22,7 @@ router.get('/', (req, res) => {
             })
             console.log("error finding user!", err)
         })
-});
+})
 
 // GET -------------------------------------------------------------------------
 // @route   GET /user/:id

@@ -1,9 +1,9 @@
 // @file    ./models/User.js
 
 // Setup dependencies to create the user model.
-const mongoose = require("mongoose")
-require("mongoose-type-email")
-const stream = require("stream")
+const mongoose = require("mongoose");
+require("mongoose-type-email");
+const stream = require("stream");
 
 // Create schema ---------------------------------------------------------------
 const userSchema = new mongoose.Schema({
@@ -31,10 +31,10 @@ const userSchema = new mongoose.Schema({
         type: Number,
         required: true
     }
-}, {timestamps: true})
+}, {timestamps: true});
 
 // Create mongoose model -------------------------------------------------------
-const userModel = mongoose.model("User", userSchema, "users")
+const userModel = mongoose.model("User", userSchema, "users");
 
 // Export the User model as a module.
-module.exports = userModel
+module.exports = userModel;

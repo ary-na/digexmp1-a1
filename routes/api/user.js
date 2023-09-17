@@ -1,9 +1,9 @@
 // @file    ./routes/api/user.js
 
 // Setup dependencies for user routes.
-const express = require("express")
-const router = express.Router()
-const User = require("./../../models/User")
+const express = require("express");
+const router = express.Router();
+const User = require("./../../models/User");
 
 // GET -------------------------------------------------------------------------
 // @route   GET /user
@@ -13,16 +13,16 @@ router.get('/', (req, res) => {
     // Get all users from the User model.
     User.find()
         .then(users => {
-            res.json(users)
+            res.json(users);
         })
         .catch(err => {
             res.status(500).json({
                 message: "error finding user!",
                 error: err
-            })
-            console.log("error finding user!", err)
-        })
-})
+            });
+            console.log("error finding user!", err);
+        });
+});
 
 // GET -------------------------------------------------------------------------
 // @route   GET /user/:id
@@ -35,19 +35,19 @@ router.get('/:id', (req, res) => {
             if (!user) {
                 res.status(404).json({
                     message: "user not found!"
-                })
+                });
             } else {
-                res.json(user)
+                res.json(user);
             }
         })
         .catch(err => {
             res.status(500).json({
                 message: "error finding user!",
                 error: err
-            })
-            console.log("error finding user!", err)
-        })
-})
+            });
+            console.log("error finding user!", err);
+        });
+});
 
 // POST ------------------------------------------------------------------------
 // @route   POST /user
@@ -58,7 +58,7 @@ router.post('/', (req, res) => {
     if (!req.body) {
         return res.status(400).json({
             message: "body is missing!"
-        })
+        });
     }
 
     // Create a new user document using the User model.
@@ -69,21 +69,21 @@ router.post('/', (req, res) => {
         password: req.body.password,
         bio: req.body.bio,
         accessLevel: req.body.accessLevel
-    })
+    });
 
     // Save new user document
     newUser.save()
         .then(user => {
-            res.json(user)
+            res.json(user);
         })
         .catch(err => {
             res.json(500).json({
                 message: "error creating user!",
                 error: err
-            })
-            console.log("error creating user!", err)
-        })
-})
+            });
+            console.log("error creating user!", err);
+        });
+});
 
 // PUT -------------------------------------------------------------------------
 // @route   PUT /user/:id
@@ -94,7 +94,7 @@ router.put("/:id", (req, res) => {
     if (!req.body || !req.params.id) {
         return res.status(400).json({
             message: "header/body is missing!"
-        })
+        });
     }
 
     // Find and update the user using the User model and return the updated user.
@@ -104,19 +104,19 @@ router.put("/:id", (req, res) => {
             if (!user) {
                 res.status(404).json({
                     message: "user not found!"
-                })
+                });
             } else {
-                res.json(user)
+                res.json(user);
             }
         })
         .catch(err => {
             res.status(500).json({
                 message: "error updating user!",
                 error: err
-            })
-            console.log("error updating user!", err)
-        })
-})
+            });
+            console.log("error updating user!", err);
+        });
+});
 
 // DELETE ----------------------------------------------------------------------
 // @route   DELETE /user/:id
@@ -127,7 +127,7 @@ router.delete("/:id", (req, res) => {
     if (!req.params.id) {
         return res.status(400).json({
             message: "user id is missing!"
-        })
+        });
     }
 
     // Delete the user using the User model.
@@ -135,16 +135,16 @@ router.delete("/:id", (req, res) => {
         .then(() => {
             res.json({
                 message: "user deleted!"
-            })
+            });
         })
         .catch(err => {
             res.status(500).json({
                 message: "error deleting user!",
                 error: err
-            })
-            console.log("error deleting user!", err)
-        })
-})
+            });
+            console.log("error deleting user!", err);
+        });
+});
 
 // Export the router object as a module.
-module.exports = router
+module.exports = router;

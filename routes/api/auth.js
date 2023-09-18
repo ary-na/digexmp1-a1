@@ -17,7 +17,7 @@ router.post('/signin', (req, res) => {
     // Check if an email or a password is not provided.
     if (!req.body.email || !req.body.password) {
         return res.status(400).json({
-            message: "body is missing!"
+            message: "email or password is missing!"
         });
     }
 
@@ -73,7 +73,7 @@ router.get('/validate', (req, res) => {
 
     if (!req.headers.authorization) {
         return res.status(400).json({
-            message: "header is missing!"
+            message: "authorization token is missing!"
         });
     }
 
@@ -84,6 +84,7 @@ router.get('/validate', (req, res) => {
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, tokenData) => {
         // Check if the token is not valid.
         if (err) {
+            console.log(err);
             return res.sendStatus(403);
         } else {
             return res.json({

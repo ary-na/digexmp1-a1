@@ -57,7 +57,7 @@ router.post('/', (req, res) => {
     // Check if body is missing.
     if (!req.body.firstName || !req.body.lastName || !req.body.email || !req.body.password || !req.body.bio || !req.body.accessLevel) {
         return res.status(400).json({
-            message: "body is missing!"
+            message: "Firstname, lastname, email, password, bio or access level is missing!"
         });
     }
 
@@ -111,7 +111,7 @@ router.put("/:id", (req, res) => {
     // Check if header/body is missing.
     if (Object.keys(req.body).length === 0 || !req.params.id) {
         return res.status(400).json({
-            message: "header or body is missing!"
+            message: "id or user detail is missing!"
         });
     }
 

@@ -1,6 +1,6 @@
 // Setup dependencies for the Utils class.
 require("dotenv").config();
-let crypto = require('crypto');
+const crypto = require('crypto');
 const jwt = require("jsonwebtoken");
 
 class Utils {
@@ -13,7 +13,7 @@ class Utils {
         const salt = crypto.randomBytes(16).toString("hex");
         const hash = crypto.pbkdf2Sync(password, salt, 2048, 32, "sha512").toString("hex");
         return [salt, hash].join("$");
-    };
+    }
 
     /**
      * Verifies user password by comparing it to the original password.
@@ -28,7 +28,7 @@ class Utils {
         // Create a hash using the provided password with the same salt as the original password.
         const hash = crypto.pbkdf2Sync(password, salt, 2048, 32, "sha512").toString("hex");
         return hash === originalHash;
-    };
+    }
 
     /**
      * Generates access token using jsonwebtoken package.
@@ -37,7 +37,7 @@ class Utils {
      */
     generateAccessToken(user) {
         return jwt.sign({user: user}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "30min"});
-    };
+    }
 }
 
 // Export the Utils class as a module.

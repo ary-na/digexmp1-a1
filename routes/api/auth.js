@@ -24,7 +24,7 @@ router.post('/signin', (req, res) => {
     // Find user in the database using the email filter.
     User.findOne({email: req.body.email})
         .then(user => {
-            // if user doesnt exist
+            // Check if user does not exist.
             if (!user) {
                 return res.status(400).json({
                     message: "user not found!"
@@ -41,7 +41,7 @@ router.post('/signin', (req, res) => {
                     lastName: user.lastName,
                     email: user.email,
                     bio: user.bio
-                }
+                };
 
                 // Generate a jsonwebtoken access token.
                 const accessToken = Utils.generateAccessToken(userObject);
@@ -53,7 +53,7 @@ router.post('/signin', (req, res) => {
             } else {
                 return res.status(400).json({
                     message: "incorrect password or email!"
-                })
+                });
             }
         })
         .catch(err => {
@@ -71,14 +71,14 @@ router.post('/signin', (req, res) => {
 // @access  Public
 router.get('/validate', (req, res) => {
 
-    if (!req.headers["authorization"]) {
+    if (!req.headers.authorization) {
         return res.status(400).json({
             message: "header is missing!"
         });
     }
 
     // Get authorization token from the header.
-    const token = req.headers["authorization"].split(" ")[1];
+    const token = req.headers.authorization.split(" ")[1];
 
     // Decrypt and validate the authorization token.
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, tokenData) => {
@@ -87,7 +87,7 @@ router.get('/validate', (req, res) => {
             return res.sendStatus(403);
         } else {
             return res.json({
-                tokenData
+                tokenData: tokenData
             });
         }
     });

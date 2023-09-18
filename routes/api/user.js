@@ -111,7 +111,7 @@ router.put("/:id", (req, res) => {
     // Check if header/body is missing.
     if (Object.keys(req.body).length === 0 || !req.params.id) {
         return res.status(400).json({
-            message: "header/body is missing!"
+            message: "header or body is missing!"
         });
     }
 
@@ -141,13 +141,6 @@ router.put("/:id", (req, res) => {
 // @desc    Delete a user by id.
 // @access  Public
 router.delete("/:id", (req, res) => {
-    // Check if header is missing.
-    if (!req.params.id) {
-        return res.status(400).json({
-            message: "user id is missing!"
-        });
-    }
-
     // Delete the user using the User model.
     User.findByIdAndDelete(req.params.id)
         .then(() => {

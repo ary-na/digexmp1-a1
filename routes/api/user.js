@@ -55,9 +55,9 @@ router.get('/:id', (req, res) => {
 // @access  Public
 router.post('/', (req, res) => {
     // Check if body is missing.
-    if (!req.body.firstName || !req.body.lastName || !req.body.email || !req.body.password || !req.body.bio || !req.body.accessLevel) {
+    if (!req.body.firstName || !req.body.lastName || !req.body.email || !req.body.password || !req.body.accessLevel) {
         return res.status(400).json({
-            message: "Firstname, lastname, email, password, bio or access level is missing!"
+            message: "Firstname, lastname, email, password, or access level is missing!"
         });
     }
 
@@ -75,7 +75,7 @@ router.post('/', (req, res) => {
             lastName: req.body.lastName,
             email: req.body.email,
             password: req.body.password,
-            bio: req.body.bio,
+            bio: req.body.bio || "",
             accessLevel: req.body.accessLevel
         });
 
